@@ -1,0 +1,3 @@
+Exception in thread "Thread-7" java.lang.OutOfMemoryError: Java heap space
+	at com.bird.util.Messager.run(Messager.java:75)
+	at java.lang.Thread.run(Unknown Source)

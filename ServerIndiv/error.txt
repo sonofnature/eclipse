@@ -1,0 +1,37 @@
+Tue Nov 07 14:37:47 CST 2017
+java.lang.NullPointerException
+	at com.bird.accountcheck.server.Listener.receiveLine(Listener.java:55)
+	at com.bird.accountcheck.server.Server.start(Server.java:56)
+	at com.bird.accountcheck.server.Server.main(Server.java:38)
+Tue Nov 07 14:48:32 CST 2017
+java.lang.NullPointerException
+	at com.bird.accountcheck.server.Listener.receiveLine(Listener.java:55)
+	at com.bird.accountcheck.server.Server.start(Server.java:56)
+	at com.bird.accountcheck.server.Server.main(Server.java:38)
+Fri Nov 10 16:39:30 CST 2017
+java.lang.NullPointerException
+	at com.bird.accountcheck.server.Listener.accept(Listener.java:91)
+	at com.bird.accountcheck.server.Listener.receiveLine(Listener.java:58)
+	at com.bird.accountcheck.server.Server.start(Server.java:56)
+	at com.bird.accountcheck.server.Server.main(Server.java:38)
+Mon Nov 13 08:25:01 CST 2017
+java.lang.NullPointerException
+	at com.bird.accountcheck.server.Listener.recvLine(Listener.java:37)
+	at com.bird.accountcheck.server.Server.start(Server.java:56)
+	at com.bird.accountcheck.server.Server.main(Server.java:38)
+java.lang.NullPointerException
+	at org.jsoup.Jsoup.parse(Jsoup.java:103)
+	at com.bird.accountcheck.server.Parser.parse(Parser.java:18)
+	at com.bird.accountcheck.server.Server.start(Server.java:74)
+	at com.bird.accountcheck.server.Server.main(Server.java:36)
+20171214 08:35:19  ½âÎöÍøÒ³ÀàĞÍÊ§°Ü
+java.lang.NullPointerException
+	at org.jsoup.Jsoup.parse(Jsoup.java:103)
+	at com.bird.accountcheck.server.Parser.getType(Parser.java:60)
+	at com.bird.accountcheck.server.Server.start(Server.java:75)
+	at com.bird.accountcheck.server.Server.main(Server.java:36)
+20171214 13:59:39  
+java.lang.NullPointerException
+	at com.bird.accountcheck.server.Listener.recvLine(Listener.java:37)
+	at com.bird.accountcheck.server.Server.start(Server.java:53)
+	at com.bird.accountcheck.server.Server.main(Server.java:36)
