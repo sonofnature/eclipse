@@ -59,15 +59,17 @@ class DBSave {
 			ps.clearParameters();
 			for (int i = 0; i < value.length; i++) {
 				if (i == 6) {
-					Double d;
-					try {
-						d = Double.valueOf(value[i]);
-					} catch (Exception e) {
-						d = 0.00;
+					if (value[i] == null) {
+						ps.setNull(i + 1, java.sql.Types.DECIMAL);
+					} else {
+						ps.setDouble(i + 1, Double.valueOf(value[i]));
 					}
-					ps.setDouble(i + 1, d);
 				} else {
-					ps.setString(i + 1, value[i]);
+					if (value[i] == null) {
+						ps.setNull(i + 1, java.sql.Types.VARCHAR);
+					} else {
+						ps.setString(i + 1, value[i]);
+					}
 				}
 			}
 			ps.execute();
@@ -92,7 +94,7 @@ class DBSave {
 	public String[] parser(String record) {
 		String[] value = new String[16];
 		for (int i = 0; i < value.length; i++) {
-			value[i] = "";
+			value[i] = null;
 		}
 
 		StringTokenizer st = new StringTokenizer(record, "|", true);

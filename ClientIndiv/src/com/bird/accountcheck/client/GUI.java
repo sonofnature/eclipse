@@ -94,7 +94,7 @@ class GUI implements MouseListener {
 		spane.setSize(600, 560);
 		spane.setLocation(20, 70);
 
-		textarea = new JTextArea();
+		textarea = new JTextArea("欢迎使用，请在上面的输入栏内输入企业信用码或名称后点击\"查询\"\n\n");
 		spane.add(textarea);
 		textarea.setFont(font);
 		textarea.setLineWrap(true);
