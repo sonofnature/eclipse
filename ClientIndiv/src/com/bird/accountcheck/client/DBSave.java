@@ -22,7 +22,7 @@ class DBSave {
 	private String[] value;// 记录数据库每个字段的值
 
 	public DBSave(Client owner) {
-		this.owner=owner;
+		this.owner = owner;
 		isconn = false;
 		try {
 			Class.forName("com.ibm.db2.jcc.DB2Driver").newInstance();
@@ -59,7 +59,13 @@ class DBSave {
 			ps.clearParameters();
 			for (int i = 0; i < value.length; i++) {
 				if (i == 6) {
-					ps.setDouble(i + 1, Double.valueOf(value[i]));
+					Double d;
+					try {
+						d = Double.valueOf(value[i]);
+					} catch (Exception e) {
+						d = 0.00;
+					}
+					ps.setDouble(i + 1, d);
 				} else {
 					ps.setString(i + 1, value[i]);
 				}
