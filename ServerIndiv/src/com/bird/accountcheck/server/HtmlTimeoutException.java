@@ -5,7 +5,7 @@ package com.bird.accountcheck.server;
  * @author a
  *
  */
-public class HtmlTimeoutException extends Exception{
+class HtmlTimeoutException extends Exception{
 
 	private static final long serialVersionUID = 1L;
 

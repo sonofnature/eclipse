@@ -26,6 +26,7 @@ import com.bird.util.Tool;
  */
 class Queryer {
 
+	private Server owner;
 	private Linker linker;
 	private Robot robot;
 	private ArrayList<String> tracks;
@@ -42,6 +43,7 @@ class Queryer {
 	private Rectangle screenRectangle;// 屏幕矩形
 
 	public Queryer(Server owner) throws Exception {
+		this.owner = owner;
 		this.linker = owner.getLinker();
 		robot = new Robot();
 		screenRectangle = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
@@ -87,19 +89,29 @@ class Queryer {
 			return keyword + "@20171225180000.html";
 		}
 
-		int times = 0;// 超时重来次数
+		int times = 0, i;// 超时重来次数
 		while (true) {
 			try {
 				// 打开首页
 				pressCombKey(KeyEvent.VK_CONTROL, KeyEvent.VK_F4);// ctrl+F4
 				pressCombKey(KeyEvent.VK_CONTROL, KeyEvent.VK_L);// ctrl+L,定位到地址栏
-				Toolkit.getDefaultToolkit().getSystemClipboard()
-						.setContents(new StringSelection(Server.URL), null);
+				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(Server.URL), null);
 				pressCombKey(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
 				robot.mouseMove(0, 0);
 				pressKey(KeyEvent.VK_ENTER);
 
-				waitHtml(() -> exist(freshimage) && exist(titleimage));
+				// 输入关键字
+				for (i = 0; i < 3; i++) {
+					waitHtml(() -> exist(freshimage));
+					if (!exist(titleimage)) {
+						click(freshimage.x + 6, freshimage.y + 6);// 刷新
+						robot.mouseMove(0, 0);
+					} else
+						break;
+				}
+				if (i >= 3)
+					throw new HtmlTimeoutException();
+				owner.log("首页打开");
 				int x = titleimage.x + 419 + (int) (Math.random() * 400);
 				int y = titleimage.y + 331 + (int) (Math.random() * 30);
 				moveTo(x, y);
@@ -113,26 +125,33 @@ class Queryer {
 						|| exist(tipimage));
 
 				if (exist(tipimage)) {// 关键字不合要求
+					owner.log("关键字不合要求");
 					return keyword + "@20171225180000.html";
 				} else if (exist(sliderimage)) {// 滑块验证
+					owner.log("滑块验证");
 					continue;
 				} else if (exist(okimage)) {// 文字验证
+					owner.log("文字验证");
 					charUnlock();
 				}
 
 				// 打开并保存结果,此处对无结果返回的网页照常保存，后期分析网页是在行判断结果是否正确
-				click(titleimage.x + 10, titleimage.y + 60);
-				pressKey(KeyEvent.VK_TAB, 6);
+				owner.log("结果列表出现");
+				click(titleimage.x + 20, titleimage.y + 585);
+				pressKey(KeyEvent.VK_TAB);
 				pressKey(KeyEvent.VK_ENTER);
-				robot.delay(1000);
-				for(int i=0;i<5;i++){
+				for (i = 0; i < 5; i++) {
 					waitHtml(() -> exist(resultimage) || exist(freshimage));
-					if(isBlank()) {//空白网页
-						click(freshimage.x + 6, freshimage.y + 6);//刷新
-					}else{
+					if (isBlank()) {// 空白网页
+						click(freshimage.x + 6, freshimage.y + 6);// 刷新
+						robot.mouseMove(0, 0);
+					} else {
 						break;
 					}
 				}
+				if (i >= 5)
+					throw new HtmlTimeoutException();
+				owner.log("详细结果显示");
 				pressCombKey(KeyEvent.VK_CONTROL, KeyEvent.VK_S);// ctrl+s
 
 				// 保存的文件名加上时间戳
@@ -223,14 +242,17 @@ class Queryer {
 		}
 		return true;
 	}
-	
+
 	/*
 	 * 近似判断网页是否是全白，什么都没有，通过取刷新图标下面的一条线看看是否全是白色来近似确定
 	 */
-	private boolean isBlank(){
-		for(int dy=80;dy<400;dy++){
-			Color rgb=robot.getPixelColor(freshimage.x, freshimage.y+dy);
-			if(!rgb.equals(Color.WHITE)) return false;
+	private boolean isBlank() {
+		int white = Color.WHITE.getRGB();
+		image = robot.createScreenCapture(screenRectangle);
+		for (int dy = 80; dy < 400; dy++) {
+			int rgb = image.getRGB(freshimage.x, freshimage.y + dy);
+			if (rgb != white)
+				return false;
 		}
 		return true;
 	}
@@ -291,7 +313,6 @@ class Queryer {
 
 			// 接收返回结果
 			String r = linker.recvString(60 * 1000);
-			robot.delay(5000);// 调试用
 			StringTokenizer st = new StringTokenizer(r, "|");
 			while (st.hasMoreTokens()) {
 				int x = Integer.valueOf(st.nextToken());

@@ -5,6 +5,6 @@ package com.bird.accountcheck.server;
  * @author a
  *
  */
-public class NetTimeoutException extends Exception{
+class NetTimeoutException extends Exception{
 	private static final long serialVersionUID = 1L;
 }

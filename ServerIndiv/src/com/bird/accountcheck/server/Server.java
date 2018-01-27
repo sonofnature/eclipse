@@ -19,10 +19,9 @@ public class Server {
 	public static final String DOWN_PNG = "down.png";
 	public static final String SAVE_PNG="save.png";
 	public static final String TRACK_FILE = "track.txt";
-	public static final String README_FILE = "readme.txt";
 	public static final String URL = "http://www.gsxt.gov.cn/corp-query-homepage.html";// 网址首页地址
 	public static final int TAB_COUNT = 3;// 从网站首页的地址栏到输入栏需要按的Tab键次数
-	public static final int TIME_LIMIT = 60000;// 在某一状态等待的最长时间限制
+	public static final int TIME_LIMIT = 120000;// 在某一状态等待的最长时间限制
 	public static final int PORT = 12346;// 监听端口，区别于批量查询
 
 	private GUI gui;
@@ -54,7 +53,6 @@ public class Server {
 				// 与一个客户端建立连接
 				linker.accept();
 				String msg = linker.recvString(60 * 1000);
-				log(msg);
 				// 打招呼
 				if (msg.equals("hi")) {
 					linker.sendString("hi");

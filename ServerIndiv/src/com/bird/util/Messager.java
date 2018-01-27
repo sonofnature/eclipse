@@ -9,24 +9,23 @@ import java.util.ArrayList;
 
 /**
  * 网络通信接口，负责一个socket的通信，通过两个共享区与其他线程联系，当其他线程想要发送消息时，只要将消息添加到sendBuf中，而从recvBuf中接受消息；
- * 消息的长度都需大于0； 因为通过共享区实现进程间通信，故需操作时要同步共享区；
- * 它提供稳健的网络通讯，当socket出现不通时，不论是主动断开，还是硬件断网，总会被发现，并以返回null标志断开；timeout参数是设置硬件断网发现的时间；
- * 该程序不负责关闭socket；
+ * 因为通过共享区实现进程间通信，故需要同步共享区；
+ * 它提供稳健的网络通讯，当socket出现不通时，不论是主动断开，还是硬件断网，总会被发现，并以返回null标志断开；timeout参数是设置硬件断网发现的时间；该程序不负责关闭socket。
  * 
  * @author bird
  *
  */
 public class Messager implements Runnable {
-	private static final int RESPOND = 10;// 响应任务时间（毫秒）
-	private static final int CHECK_TIME = 60000;// 最长发现网络异常的时间，读等待到达这个时间会发送报文确认网络状况
+	private final int respond = 10;// 响应任务时间（毫秒）
+	private final int checktime = 60000;// 最长发现网络异常的时间，读等待到达这个时间会发送报文确认网络状况
 	private static final int ENQ = -1;// 询问头
 	private static final int ACK = -2;// 响应头
 
 	private Socket socket;
 	private InputStream is;
 	private OutputStream os;
-	private ArrayList<byte[]> sendBuf;// 待发送消息列表，与主线程共享
-	private ArrayList<byte[]> recvBuf;// 接受的消息列表，与主线程共享
+	private ArrayList<byte[]> sendBuf;// 待发送消息列表，与其他线程共享
+	private ArrayList<byte[]> recvBuf;// 接受的消息列表，与其他线程共享
 
 	/**
 	 * 
@@ -46,12 +45,12 @@ public class Messager implements Runnable {
 	@Override
 	public void run() {
 		try {
-			socket.setSoTimeout(RESPOND);
+			socket.setSoTimeout(respond);
 			is = socket.getInputStream();
 			os = socket.getOutputStream();
 
 			boolean waitAck = false;// 标志是否是在等应答
-			long t1 = System.currentTimeMillis() + CHECK_TIME;// 超时时间点
+			long t1 = System.currentTimeMillis() + checktime;// 超时时间点
 			while (true) {
 				// 检查写任务
 				if (sendBuf.size() > 0) {
@@ -67,12 +66,12 @@ public class Messager implements Runnable {
 					int n = readHead();
 					// 成功读取
 					waitAck = false;
-					t1 = System.currentTimeMillis() + CHECK_TIME;
+					t1 = System.currentTimeMillis() + checktime;
 					if (n == ENQ) {// 对方询问
 						writeHead(ACK);
 					} else if (n == ACK) {// 对方应答
 						waitAck = false;
-					} else if (n > 0) {// 正常数据，注意这里不包含0，因为当对方网络关闭后读取的将全是0
+					} else if (n > 0) {// 正常数据
 						byte[] b = new byte[n];
 						readBody(b);
 						addMsg(b);
@@ -141,7 +140,7 @@ public class Messager implements Runnable {
 	 * 发送4字节头部信息
 	 * 
 	 * @param n
-	 *            数据长度，enq代表询问，ack代表应答，这两种情况下均无数据体
+	 *            数据长度，enq代表询问，ack代表应答，这两种清空下均无数据体
 	 * @throws IOException
 	 */
 	private void writeHead(int n) throws IOException {
@@ -169,6 +168,6 @@ public class Messager implements Runnable {
 		} catch (SocketTimeoutException e) {
 			throw new IOException();
 		}
-		socket.setSoTimeout(RESPOND);
+		socket.setSoTimeout(respond);
 	}
 }
