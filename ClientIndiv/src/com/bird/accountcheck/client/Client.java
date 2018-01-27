@@ -265,21 +265,21 @@ public class Client {
 			if (value[i] == null)
 				value[i] = "";
 		}
-		gui.addText("企业名称(M):\t" + value[0] + '\n');
-		gui.addText("信用代码(X):\t" + value[1] + '\n');
-		gui.addText("是否经营异常:\t" + value[2] + '\n');
-		gui.addText("登记状态:\t" + value[3] + '\n');
-		gui.addText("类型:\t" + value[4] + '\n');
-		gui.addText("法人代表(R):\t" + value[5] + '\n');
-		gui.addText("注册资本(元):\t" + value[6] + '\n');
-		gui.addText("成立日期:\t" + value[7] + '\n');
-		gui.addText("经营起始日:\t" + value[8] + '\n');
-		gui.addText("经营期限至:\t" + value[9] + '\n');
-		gui.addText("登记机关:\t" + value[10] + '\n');
-		gui.addText("核准日期:\t" + value[11] + '\n');
-		gui.addText("地址(D):\t" + value[12] + '\n');
-		gui.addText("营业范围(F):\t" + value[13] + '\n');
-		gui.addText("\n");
+		gui.addText("企业名称(M):\t" + value[0] + "\r\n");
+		gui.addText("信用代码(X):\t" + value[1] + "\r\n");
+		gui.addText("是否经营异常:\t" + value[2] + "\r\n");
+		gui.addText("登记状态:\t" + value[3] + "\r\n");
+		gui.addText("类型:\t" + value[4] + "\r\n");
+		gui.addText("法人代表(R):\t" + value[5] + "\r\n");
+		gui.addText("注册资本(元):\t" + value[6] + "\r\n");
+		gui.addText("成立日期:\t" + value[7] + "\r\n");
+		gui.addText("经营起始日:\t" + value[8] + "\r\n");
+		gui.addText("经营期限至:\t" + value[9] + "\r\n");
+		gui.addText("登记机关:\t" + value[10] + "\r\n");
+		gui.addText("核准日期:\t" + value[11] + "\r\n");
+		gui.addText("地址(D):\t" + value[12] + "\r\n");
+		gui.addText("营业范围(F):\t" + value[13] + "\r\n");
+		gui.addText("\r\n");
 	}
 
 	/**
