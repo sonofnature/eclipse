@@ -158,11 +158,11 @@ class GUI implements MouseListener {
 	 * 使交互界面有效
 	 */
 	public void enableActive(BufferedImage image) {
-		imlabel.setIcon(new ImageIcon(image));
 		spane.setVisible(false);
 		imlabel.setVisible(true);
 		okbutton.setVisible(true);
 		resetbutton.setVisible(true);
+		imlabel.setIcon(new ImageIcon(image));
 		frame.setExtendedState(JFrame.NORMAL);
 		frame.requestFocus();
 	}
