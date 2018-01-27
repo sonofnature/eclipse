@@ -261,6 +261,10 @@ public class Client {
 	private void showResult(String[] value) {
 		if (value.length < 16)
 			return;
+		for (int i = 0; i < value.length; i++) {
+			if (value[i] == null)
+				value[i] = "";
+		}
 		gui.addText("企业名称(M):\t" + value[0] + '\n');
 		gui.addText("信用代码(X):\t" + value[1] + '\n');
 		gui.addText("是否经营异常:\t" + value[2] + '\n');

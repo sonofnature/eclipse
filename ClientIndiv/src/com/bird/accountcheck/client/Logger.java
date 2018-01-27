@@ -23,7 +23,7 @@ class Logger {
 	public void log(String s) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 		String time = formatter.format(new Date());
-		gui.addText(time + " " + s + "\n");
+		gui.addText(time + " " + s + "\r\n");
 	}
 
 	/**
