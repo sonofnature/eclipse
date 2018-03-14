@@ -29,7 +29,7 @@ class HotKeyProcessor implements HotkeyListener {
 	}
 
 	public void registerKey() {
-		JIntellitype.getInstance().registerHotKey(COPY_ALL, JIntellitype.MOD_CONTROL, 'T');
+		JIntellitype.getInstance().registerHotKey(COPY_ALL, JIntellitype.MOD_CONTROL, 'Q');
 		JIntellitype.getInstance().registerHotKey(COPY_MING_CHENG, JIntellitype.MOD_CONTROL, 'M');
 		JIntellitype.getInstance().registerHotKey(COPY_XIN_YONG_MA, JIntellitype.MOD_CONTROL, 'X');
 		JIntellitype.getInstance().registerHotKey(COPY_FA_REN, JIntellitype.MOD_CONTROL, 'R');
