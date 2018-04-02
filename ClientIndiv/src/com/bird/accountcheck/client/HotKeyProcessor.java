@@ -48,7 +48,7 @@ class HotKeyProcessor implements HotkeyListener {
 			paste(value[1]);
 			pressEnter(2);
 			paste(value[12]);
-			pressEnter(4);
+			pressEnter(3);
 			paste(value[13]);
 			pressEnter(2);
 			paste(value[5]);
