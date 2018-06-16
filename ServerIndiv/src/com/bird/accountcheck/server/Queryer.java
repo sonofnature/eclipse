@@ -99,17 +99,15 @@ class Queryer {
 				pressCombKey(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
 				robot.mouseMove(0, 0);
 				pressKey(KeyEvent.VK_ENTER);
+				waitHtml(() -> exist(freshimage));
 
 				// 输入关键字
-				for (i = 0; i < 3; i++) {
+				for (i = 0; i < 2; i++) {
+					click(freshimage.x + 6, freshimage.y + 6);// 刷新
+					robot.mouseMove(0, 0);
 					waitHtml(() -> exist(freshimage));
-					if (!exist(titleimage)) {
-						click(freshimage.x + 6, freshimage.y + 6);// 刷新
-						robot.mouseMove(0, 0);
-					} else
-						break;
 				}
-				if (i >= 3)
+				if (!exist(titleimage))
 					throw new HtmlTimeoutException();
 				owner.log("首页打开");
 				int x = titleimage.x + 419 + (int) (Math.random() * 400);
