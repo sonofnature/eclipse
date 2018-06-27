@@ -100,20 +100,25 @@ class Queryer {
 				robot.mouseMove(0, 0);
 				pressKey(KeyEvent.VK_ENTER);
 				waitHtml(() -> exist(freshimage));
-
-				// 输入关键字
-				for (i = 0; i < 2; i++) {
-					click(freshimage.x + 6, freshimage.y + 6);// 刷新
-					robot.mouseMove(0, 0);
-					waitHtml(() -> exist(freshimage));
-				}
 				if (!exist(titleimage))
 					throw new HtmlTimeoutException();
 				owner.log("首页打开");
-				int x = titleimage.x + 419 + (int) (Math.random() * 400);
-				int y = titleimage.y + 331 + (int) (Math.random() * 30);
-				moveTo(x, y);
-				click(x, y);
+
+				// 刷新
+				// for (i = 0; i < 1; i++) {
+				// click(freshimage.x + 6, freshimage.y + 6);
+				// robot.mouseMove(0, 0);
+				// waitHtml(() -> exist(freshimage));
+				// }
+
+				// 通过模拟鼠标移动将焦点移到输入框
+				// int x = titleimage.x + 419 + (int) (Math.random() * 400);
+				// int y = titleimage.y + 331 + (int) (Math.random() * 30);
+				// moveTo(x, y);
+				// click(x, y);
+
+				// 输入关键字
+				pressKey(KeyEvent.VK_TAB, 3);
 				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(keyword), null);
 				pressCombKey(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
 				pressKey(KeyEvent.VK_ENTER);
