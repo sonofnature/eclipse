@@ -321,6 +321,7 @@ class Queryer {
 				int x = Integer.valueOf(st.nextToken());
 				int y = Integer.valueOf(st.nextToken());
 				click(okimage.x - 201 + x, okimage.y - 362 + y);
+				robot.delay((int) (Math.random() * 800));
 			}
 			click(okimage.x + 55, okimage.y + 19);
 			robot.mouseMove(okimage.x - 20, okimage.y - 20);
